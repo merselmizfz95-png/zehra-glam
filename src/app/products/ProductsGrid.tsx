@@ -1,11 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { ShoppingBag, Star } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import Image from "next/image";
+import { Star } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n/context";
+import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/animations/ScrollReveal";
+import { PRODUCT_IMAGE_MAP } from "@/constants/images";
 import type { Product } from "@/types/database";
 
 interface ProductsGridProps {
@@ -24,100 +27,112 @@ export function ProductsGrid({ products, categories }: ProductsGridProps) {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div className="text-center mb-12">
-        <p className="text-sm font-medium text-primary uppercase tracking-widest mb-3 font-[family-name:var(--font-inter)]">
-          {t.products.eyebrow}
-        </p>
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
-          {t.products.title}
-        </h1>
-      </div>
+      <ScrollReveal>
+        <div className="text-center mb-16">
+          <p className="text-sm font-medium text-primary uppercase tracking-[0.2em] mb-4 font-[family-name:var(--font-inter)]">
+            {t.products.eyebrow}
+          </p>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
+            {t.products.title}
+          </h1>
+          <div className="mt-6 w-16 h-[2px] bg-primary mx-auto" />
+        </div>
+      </ScrollReveal>
 
-      <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
-        <Button
-          variant={activeCategory === "All" ? "default" : "outline"}
-          size="sm"
-          onClick={() => setActiveCategory("All")}
-          className="font-[family-name:var(--font-inter)]"
-        >
-          {t.products.allCategories}
-        </Button>
-        {categories.map((cat) => (
-          <Button
-            key={cat}
-            variant={activeCategory === cat ? "default" : "outline"}
-            size="sm"
-            onClick={() => setActiveCategory(cat)}
-            className="font-[family-name:var(--font-inter)]"
-          >
-            {cat}
-          </Button>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filtered.map((product) => {
-          const name = locale === "en" ? product.name_en : product.name_fr;
-          const desc =
-            locale === "en"
-              ? product.description_en
-              : product.description_fr;
-
-          return (
-            <Card
-              key={product.id}
-              className="group overflow-hidden border-border/50 hover:shadow-lg transition-all duration-300"
+      <ScrollReveal delay={0.2}>
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-14">
+          {["All", ...categories].map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat === "All" ? "All" : cat)}
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 font-[family-name:var(--font-inter)] ${
+                (cat === "All" ? "All" : cat) === activeCategory
+                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
+                  : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground"
+              }`}
             >
-              <div className="relative aspect-square bg-gradient-to-br from-primary/5 to-muted flex items-center justify-center">
-                <ShoppingBag className="h-16 w-16 text-primary/20" />
-                {product.featured && (
-                  <Badge className="absolute top-3 right-3 font-[family-name:var(--font-inter)]">
-                    <Star className="h-3 w-3 mr-1" />
-                    {t.products.featured}
-                  </Badge>
-                )}
-                {!product.in_stock && (
-                  <Badge
-                    variant="secondary"
-                    className="absolute top-3 left-3 font-[family-name:var(--font-inter)]"
-                  >
-                    {t.products.outOfStock}
-                  </Badge>
-                )}
-              </div>
-              <CardContent className="p-6">
-                <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <p className="text-xs text-primary font-medium uppercase tracking-wider font-[family-name:var(--font-inter)]">
-                      {product.category}
-                    </p>
-                    <h3 className="mt-1 text-lg font-semibold">{name}</h3>
+              {cat === "All" ? t.products.allCategories : cat}
+            </button>
+          ))}
+        </div>
+      </ScrollReveal>
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeCategory}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+        >
+          <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7" staggerDelay={0.08}>
+            {filtered.map((product) => {
+              const name = locale === "en" ? product.name_en : product.name_fr;
+              const desc = locale === "en" ? product.description_en : product.description_fr;
+              const imageUrl = product.image_url || PRODUCT_IMAGE_MAP[product.name_en] || "";
+
+              return (
+                <StaggerItem key={product.id}>
+                  <div className="group rounded-2xl overflow-hidden bg-card border border-border/50 hover:shadow-xl hover:shadow-primary/5 transition-all duration-500">
+                    <div className="relative aspect-[4/5] overflow-hidden bg-muted">
+                      {imageUrl ? (
+                        <Image
+                          src={imageUrl}
+                          alt={name}
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-primary/5 to-muted" />
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                      {product.featured && (
+                        <Badge className="absolute top-4 right-4 bg-primary/90 backdrop-blur-sm font-[family-name:var(--font-inter)]">
+                          <Star className="h-3 w-3 mr-1 fill-current" />
+                          {t.products.featured}
+                        </Badge>
+                      )}
+                      {!product.in_stock && (
+                        <Badge variant="secondary" className="absolute top-4 left-4 backdrop-blur-sm font-[family-name:var(--font-inter)]">
+                          {t.products.outOfStock}
+                        </Badge>
+                      )}
+                    </div>
+
+                    <div className="p-6">
+                      <p className="text-[11px] text-primary font-semibold uppercase tracking-[0.15em] font-[family-name:var(--font-inter)]">
+                        {product.category}
+                      </p>
+                      <h3 className="mt-2 text-lg font-semibold leading-tight">{name}</h3>
+                      <p className="mt-2 text-sm text-muted-foreground line-clamp-2 font-[family-name:var(--font-inter)] leading-relaxed">
+                        {desc}
+                      </p>
+                      <div className="mt-5 flex items-center justify-between">
+                        <p className="text-xl font-bold text-foreground font-[family-name:var(--font-inter)]">
+                          &euro;{Number(product.price).toFixed(2)}
+                        </p>
+                        <Button
+                          size="sm"
+                          variant={product.in_stock ? "default" : "outline"}
+                          disabled={!product.in_stock}
+                          className="font-[family-name:var(--font-inter)]"
+                        >
+                          {product.in_stock ? t.products.addToCart : t.products.outOfStock}
+                        </Button>
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-lg font-bold text-primary whitespace-nowrap font-[family-name:var(--font-inter)]">
-                    &euro;{product.price.toFixed(2)}
-                  </p>
-                </div>
-                <p className="mt-2 text-sm text-muted-foreground line-clamp-2 font-[family-name:var(--font-inter)]">
-                  {desc}
-                </p>
-                <Button
-                  className="w-full mt-4 font-[family-name:var(--font-inter)]"
-                  variant="outline"
-                  disabled={!product.in_stock}
-                >
-                  {product.in_stock
-                    ? t.products.addToCart
-                    : t.products.outOfStock}
-                </Button>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
+                </StaggerItem>
+              );
+            })}
+          </StaggerContainer>
+        </motion.div>
+      </AnimatePresence>
 
       {filtered.length === 0 && (
-        <div className="text-center py-16">
-          <ShoppingBag className="h-12 w-12 text-muted-foreground/30 mx-auto mb-4" />
+        <div className="text-center py-20">
           <p className="text-muted-foreground font-[family-name:var(--font-inter)]">
             {locale === "en"
               ? "No products found in this category."
