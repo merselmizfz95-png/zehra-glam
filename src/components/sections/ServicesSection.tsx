@@ -67,14 +67,12 @@ export function ServicesSection({ services }: ServicesSectionProps) {
                     {desc}
                   </p>
                   <Button
-                    asChild
+                    render={<Link href="/booking" />}
                     variant="link"
                     className="mt-4 p-0 text-primary font-[family-name:var(--font-inter)]"
                   >
-                    <Link href="/booking">
-                      {t.services.learnMore}
-                      <ArrowRight className="ml-1 h-3 w-3" />
-                    </Link>
+                    {t.services.learnMore}
+                    <ArrowRight className="ml-1 h-3 w-3" />
                   </Button>
                 </CardContent>
               </Card>

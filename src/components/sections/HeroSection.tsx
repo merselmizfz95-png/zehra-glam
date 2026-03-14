@@ -46,19 +46,17 @@ export function HeroSection({ hero }: HeroSectionProps) {
         </p>
 
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Button asChild size="lg" className="text-base px-8 font-[family-name:var(--font-inter)]">
-            <Link href="#services">
+          <Button render={<Link href="#services" />} size="lg" className="text-base px-8 font-[family-name:var(--font-inter)]">
               {t.hero.cta}
               <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
           </Button>
           <Button
-            asChild
+            render={<Link href="/booking" />}
             variant="outline"
             size="lg"
             className="text-base px-8 font-[family-name:var(--font-inter)]"
           >
-            <Link href="/booking">{t.hero.ctaBooking}</Link>
+            {t.hero.ctaBooking}
           </Button>
         </div>
 

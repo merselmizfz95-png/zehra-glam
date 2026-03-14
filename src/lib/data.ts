@@ -16,7 +16,7 @@ export async function getHeroContent(): Promise<HeroContent | null> {
     .select("*")
     .limit(1)
     .single();
-  return data;
+  return (data as HeroContent | null) ?? null;
 }
 
 export async function getServices(): Promise<Service[]> {
@@ -25,7 +25,7 @@ export async function getServices(): Promise<Service[]> {
     .from("services")
     .select("*")
     .order("display_order", { ascending: true });
-  return data ?? [];
+  return (data as Service[] | null) ?? [];
 }
 
 export async function getAboutContent(): Promise<AboutContent | null> {
@@ -35,13 +35,13 @@ export async function getAboutContent(): Promise<AboutContent | null> {
     .select("*")
     .limit(1)
     .single();
-  return data;
+  return (data as AboutContent | null) ?? null;
 }
 
 export async function getTestimonials(): Promise<Testimonial[]> {
   const supabase = await createClient();
   const { data } = await supabase.from("testimonials").select("*");
-  return data ?? [];
+  return (data as Testimonial[] | null) ?? [];
 }
 
 export async function getProducts(category?: string): Promise<Product[]> {
@@ -51,7 +51,7 @@ export async function getProducts(category?: string): Promise<Product[]> {
     query = query.eq("category", category);
   }
   const { data } = await query;
-  return data ?? [];
+  return (data as Product[] | null) ?? [];
 }
 
 export async function getProduct(id: string): Promise<Product | null> {
@@ -61,7 +61,7 @@ export async function getProduct(id: string): Promise<Product | null> {
     .select("*")
     .eq("id", id)
     .single();
-  return data;
+  return (data as Product | null) ?? null;
 }
 
 export async function getContactInfo(): Promise<ContactInfo | null> {
@@ -71,7 +71,7 @@ export async function getContactInfo(): Promise<ContactInfo | null> {
     .select("*")
     .limit(1)
     .single();
-  return data;
+  return (data as ContactInfo | null) ?? null;
 }
 
 export async function getBookings(): Promise<Booking[]> {
@@ -80,5 +80,5 @@ export async function getBookings(): Promise<Booking[]> {
     .from("bookings")
     .select("*")
     .order("created_at", { ascending: false });
-  return data ?? [];
+  return (data as Booking[] | null) ?? [];
 }

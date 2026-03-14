@@ -2,120 +2,248 @@ export interface Database {
   public: {
     Tables: {
       hero_content: {
-        Row: HeroContent;
-        Insert: Omit<HeroContent, "id">;
-        Update: Partial<Omit<HeroContent, "id">>;
+        Row: {
+          id: string;
+          title_en: string;
+          title_fr: string;
+          subtitle_en: string;
+          subtitle_fr: string;
+          cta_text_en: string;
+          cta_text_fr: string;
+          image_url: string | null;
+        };
+        Insert: {
+          id?: string;
+          title_en?: string;
+          title_fr?: string;
+          subtitle_en?: string;
+          subtitle_fr?: string;
+          cta_text_en?: string;
+          cta_text_fr?: string;
+          image_url?: string | null;
+        };
+        Update: {
+          id?: string;
+          title_en?: string;
+          title_fr?: string;
+          subtitle_en?: string;
+          subtitle_fr?: string;
+          cta_text_en?: string;
+          cta_text_fr?: string;
+          image_url?: string | null;
+        };
+        Relationships: [];
       };
       services: {
-        Row: Service;
-        Insert: Omit<Service, "id">;
-        Update: Partial<Omit<Service, "id">>;
+        Row: {
+          id: string;
+          name_en: string;
+          name_fr: string;
+          description_en: string;
+          description_fr: string;
+          icon: string;
+          image_url: string | null;
+          display_order: number;
+        };
+        Insert: {
+          id?: string;
+          name_en: string;
+          name_fr: string;
+          description_en: string;
+          description_fr: string;
+          icon?: string;
+          image_url?: string | null;
+          display_order?: number;
+        };
+        Update: {
+          id?: string;
+          name_en?: string;
+          name_fr?: string;
+          description_en?: string;
+          description_fr?: string;
+          icon?: string;
+          image_url?: string | null;
+          display_order?: number;
+        };
+        Relationships: [];
       };
       about_content: {
-        Row: AboutContent;
-        Insert: Omit<AboutContent, "id">;
-        Update: Partial<Omit<AboutContent, "id">>;
+        Row: {
+          id: string;
+          title_en: string;
+          title_fr: string;
+          body_en: string;
+          body_fr: string;
+          years_experience: number;
+          happy_clients: number;
+          image_url: string | null;
+        };
+        Insert: {
+          id?: string;
+          title_en?: string;
+          title_fr?: string;
+          body_en: string;
+          body_fr: string;
+          years_experience?: number;
+          happy_clients?: number;
+          image_url?: string | null;
+        };
+        Update: {
+          id?: string;
+          title_en?: string;
+          title_fr?: string;
+          body_en?: string;
+          body_fr?: string;
+          years_experience?: number;
+          happy_clients?: number;
+          image_url?: string | null;
+        };
+        Relationships: [];
       };
       testimonials: {
-        Row: Testimonial;
-        Insert: Omit<Testimonial, "id">;
-        Update: Partial<Omit<Testimonial, "id">>;
+        Row: {
+          id: string;
+          client_name: string;
+          service_en: string;
+          service_fr: string;
+          quote_en: string;
+          quote_fr: string;
+          rating: number;
+        };
+        Insert: {
+          id?: string;
+          client_name: string;
+          service_en: string;
+          service_fr: string;
+          quote_en: string;
+          quote_fr: string;
+          rating?: number;
+        };
+        Update: {
+          id?: string;
+          client_name?: string;
+          service_en?: string;
+          service_fr?: string;
+          quote_en?: string;
+          quote_fr?: string;
+          rating?: number;
+        };
+        Relationships: [];
       };
       products: {
-        Row: Product;
-        Insert: Omit<Product, "id">;
-        Update: Partial<Omit<Product, "id">>;
+        Row: {
+          id: string;
+          name_en: string;
+          name_fr: string;
+          description_en: string;
+          description_fr: string;
+          price: number;
+          category: string;
+          image_url: string | null;
+          in_stock: boolean;
+          featured: boolean;
+        };
+        Insert: {
+          id?: string;
+          name_en: string;
+          name_fr: string;
+          description_en: string;
+          description_fr: string;
+          price?: number;
+          category: string;
+          image_url?: string | null;
+          in_stock?: boolean;
+          featured?: boolean;
+        };
+        Update: {
+          id?: string;
+          name_en?: string;
+          name_fr?: string;
+          description_en?: string;
+          description_fr?: string;
+          price?: number;
+          category?: string;
+          image_url?: string | null;
+          in_stock?: boolean;
+          featured?: boolean;
+        };
+        Relationships: [];
       };
       contact_info: {
-        Row: ContactInfo;
-        Insert: Omit<ContactInfo, "id">;
-        Update: Partial<Omit<ContactInfo, "id">>;
+        Row: {
+          id: string;
+          address: string;
+          phone: string;
+          email: string;
+          hours: string;
+          booking_url: string;
+        };
+        Insert: {
+          id?: string;
+          address: string;
+          phone: string;
+          email: string;
+          hours: string;
+          booking_url: string;
+        };
+        Update: {
+          id?: string;
+          address?: string;
+          phone?: string;
+          email?: string;
+          hours?: string;
+          booking_url?: string;
+        };
+        Relationships: [];
       };
       bookings: {
-        Row: Booking;
-        Insert: Omit<Booking, "id" | "created_at">;
-        Update: Partial<Omit<Booking, "id" | "created_at">>;
+        Row: {
+          id: string;
+          name: string;
+          email: string;
+          phone: string;
+          service: string;
+          message: string | null;
+          preferred_date: string | null;
+          status: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          email: string;
+          phone: string;
+          service: string;
+          message?: string | null;
+          preferred_date?: string | null;
+          status?: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          email?: string;
+          phone?: string;
+          service?: string;
+          message?: string | null;
+          preferred_date?: string | null;
+          status?: string;
+          created_at?: string;
+        };
+        Relationships: [];
       };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
     Enums: Record<string, never>;
+    CompositeTypes: Record<string, never>;
   };
 }
 
-export interface HeroContent {
-  id: string;
-  title_en: string;
-  title_fr: string;
-  subtitle_en: string;
-  subtitle_fr: string;
-  cta_text_en: string;
-  cta_text_fr: string;
-  image_url: string | null;
-}
-
-export interface Service {
-  id: string;
-  name_en: string;
-  name_fr: string;
-  description_en: string;
-  description_fr: string;
-  icon: string;
-  image_url: string | null;
-  display_order: number;
-}
-
-export interface AboutContent {
-  id: string;
-  title_en: string;
-  title_fr: string;
-  body_en: string;
-  body_fr: string;
-  years_experience: number;
-  happy_clients: number;
-  image_url: string | null;
-}
-
-export interface Testimonial {
-  id: string;
-  client_name: string;
-  service_en: string;
-  service_fr: string;
-  quote_en: string;
-  quote_fr: string;
-  rating: number;
-}
-
-export interface Product {
-  id: string;
-  name_en: string;
-  name_fr: string;
-  description_en: string;
-  description_fr: string;
-  price: number;
-  category: string;
-  image_url: string | null;
-  in_stock: boolean;
-  featured: boolean;
-}
-
-export interface ContactInfo {
-  id: string;
-  address: string;
-  phone: string;
-  email: string;
-  hours: string;
-  booking_url: string;
-}
-
-export interface Booking {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  service: string;
-  message: string | null;
-  preferred_date: string | null;
-  status: "pending" | "confirmed" | "completed" | "cancelled";
-  created_at: string;
-}
+export type HeroContent = Database["public"]["Tables"]["hero_content"]["Row"];
+export type Service = Database["public"]["Tables"]["services"]["Row"];
+export type AboutContent = Database["public"]["Tables"]["about_content"]["Row"];
+export type Testimonial = Database["public"]["Tables"]["testimonials"]["Row"];
+export type Product = Database["public"]["Tables"]["products"]["Row"];
+export type ContactInfo = Database["public"]["Tables"]["contact_info"]["Row"];
+export type Booking = Database["public"]["Tables"]["bookings"]["Row"];

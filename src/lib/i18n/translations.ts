@@ -129,7 +129,7 @@ export const translations = {
       tagline: "Studio Beaute & Esthetique",
     },
   },
-} as const;
+};
 
 export type Locale = keyof typeof translations;
-export type TranslationKeys = typeof translations.en;
+export type TranslationKeys = (typeof translations)["en"];

@@ -79,11 +79,9 @@ export function ContactSection({ contact, services }: ContactSectionProps) {
             </div>
 
             <div className="flex gap-3">
-              <Button asChild className="font-[family-name:var(--font-inter)]">
-                <a href={info.booking_url} target="_blank" rel="noopener noreferrer">
-                  {t.contact.bookOnline}
-                  <ExternalLink className="ml-2 h-4 w-4" />
-                </a>
+              <Button render={<a href={info.booking_url} target="_blank" rel="noopener noreferrer" />} className="font-[family-name:var(--font-inter)]">
+                {t.contact.bookOnline}
+                <ExternalLink className="ml-2 h-4 w-4" />
               </Button>
             </div>
           </div>

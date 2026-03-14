@@ -53,8 +53,8 @@ export function Navbar() {
               <Globe className="h-4 w-4" />
               {locale === "en" ? "FR" : "EN"}
             </Button>
-            <Button asChild size="sm" className="font-[family-name:var(--font-inter)]">
-              <Link href="/booking">{t.nav.booking}</Link>
+            <Button render={<Link href="/booking" />} size="sm" className="font-[family-name:var(--font-inter)]">
+              {t.nav.booking}
             </Button>
           </div>
 
@@ -84,8 +84,8 @@ export function Navbar() {
                 <Globe className="h-4 w-4" />
                 {locale === "en" ? "FR" : "EN"}
               </Button>
-              <Button asChild size="sm">
-                <Link href="/booking">{t.nav.booking}</Link>
+              <Button render={<Link href="/booking" />} size="sm">
+                {t.nav.booking}
               </Button>
             </div>
           </div>
