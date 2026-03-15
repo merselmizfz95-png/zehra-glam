@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n/context";
-import { IMAGES } from "@/constants/images";
 import type { HeroContent } from "@/types/database";
+
+const VIDEO_URL =
+  "https://videos.pexels.com/video-files/6620765/6620765-uhd_2560_1440_30fps.mp4";
 
 interface HeroSectionProps {
   hero: HeroContent | null;
@@ -32,16 +33,19 @@ export function HeroSection({ hero }: HeroSectionProps) {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <Image
-          src={IMAGES.hero}
-          alt="Beauty studio"
-          fill
-          priority
-          className="object-cover"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover"
+          poster="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1920&q=80"
+        >
+          <source src={VIDEO_URL} type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/55 to-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 pt-24 pb-16">

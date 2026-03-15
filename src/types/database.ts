@@ -142,6 +142,7 @@ export interface Database {
           image_url: string | null;
           in_stock: boolean;
           featured: boolean;
+          stripe_price_id: string | null;
         };
         Insert: {
           id?: string;
@@ -154,6 +155,7 @@ export interface Database {
           image_url?: string | null;
           in_stock?: boolean;
           featured?: boolean;
+          stripe_price_id?: string | null;
         };
         Update: {
           id?: string;
@@ -166,6 +168,7 @@ export interface Database {
           image_url?: string | null;
           in_stock?: boolean;
           featured?: boolean;
+          stripe_price_id?: string | null;
         };
         Relationships: [];
       };
@@ -232,6 +235,54 @@ export interface Database {
         };
         Relationships: [];
       };
+      blog_posts: {
+        Row: {
+          id: string;
+          title_en: string;
+          title_fr: string;
+          slug: string;
+          excerpt_en: string;
+          excerpt_fr: string;
+          body_en: string;
+          body_fr: string;
+          image_url: string | null;
+          category: string;
+          published: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          title_en: string;
+          title_fr: string;
+          slug: string;
+          excerpt_en: string;
+          excerpt_fr: string;
+          body_en: string;
+          body_fr: string;
+          image_url?: string | null;
+          category?: string;
+          published?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          title_en?: string;
+          title_fr?: string;
+          slug?: string;
+          excerpt_en?: string;
+          excerpt_fr?: string;
+          body_en?: string;
+          body_fr?: string;
+          image_url?: string | null;
+          category?: string;
+          published?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
@@ -247,3 +298,4 @@ export type Testimonial = Database["public"]["Tables"]["testimonials"]["Row"];
 export type Product = Database["public"]["Tables"]["products"]["Row"];
 export type ContactInfo = Database["public"]["Tables"]["contact_info"]["Row"];
 export type Booking = Database["public"]["Tables"]["bookings"]["Row"];
+export type BlogPost = Database["public"]["Tables"]["blog_posts"]["Row"];

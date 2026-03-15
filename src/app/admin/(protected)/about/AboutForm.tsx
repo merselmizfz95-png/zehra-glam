@@ -1,11 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { updateAboutContent } from "@/actions/admin";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 import { toast } from "sonner";
 import type { AboutContent } from "@/types/database";
 
@@ -14,7 +16,10 @@ interface AboutFormProps {
 }
 
 export function AboutForm({ about }: AboutFormProps) {
+  const [imageUrl, setImageUrl] = useState<string | null>(about?.image_url ?? null);
+
   async function handleSubmit(formData: FormData) {
+    if (imageUrl) formData.set("image_url", imageUrl);
     const result = await updateAboutContent(formData);
     if (result.success) {
       toast.success("About section updated");
@@ -67,6 +72,18 @@ export function AboutForm({ about }: AboutFormProps) {
                 <Label className="font-[family-name:var(--font-inter)]">Contenu</Label>
                 <Textarea name="body_fr" defaultValue={about.body_fr} rows={5} className="mt-1.5" />
               </div>
+            </div>
+          </div>
+
+          <div>
+            <Label className="font-[family-name:var(--font-inter)]">About Image</Label>
+            <div className="mt-1">
+              <ImageUpload
+                currentUrl={imageUrl}
+                onUploaded={(url) => setImageUrl(url)}
+                onRemoved={() => setImageUrl(null)}
+                folder="about"
+              />
             </div>
           </div>
 

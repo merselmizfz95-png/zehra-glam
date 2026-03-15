@@ -14,6 +14,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { upsertService, deleteService } from "@/actions/admin";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 import { toast } from "sonner";
 import type { Service } from "@/types/database";
 
@@ -24,18 +25,22 @@ interface ServicesManagerProps {
 export function ServicesManager({ services }: ServicesManagerProps) {
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Service | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   function openCreate() {
     setEditing(null);
+    setImageUrl(null);
     setOpen(true);
   }
 
   function openEdit(service: Service) {
     setEditing(service);
+    setImageUrl(service.image_url);
     setOpen(true);
   }
 
   async function handleSubmit(formData: FormData) {
+    if (imageUrl) formData.set("image_url", imageUrl);
     const result = await upsertService(formData);
     if (result.success) {
       toast.success(editing ? "Service updated" : "Service created");
@@ -98,6 +103,18 @@ export function ServicesManager({ services }: ServicesManagerProps) {
                 <div>
                   <Label className="font-[family-name:var(--font-inter)]">Display Order</Label>
                   <Input name="display_order" type="number" defaultValue={editing?.display_order ?? 0} className="mt-1" />
+                </div>
+              </div>
+
+              <div>
+                <Label className="font-[family-name:var(--font-inter)]">Service Image</Label>
+                <div className="mt-1">
+                  <ImageUpload
+                    currentUrl={imageUrl}
+                    onUploaded={(url) => setImageUrl(url)}
+                    onRemoved={() => setImageUrl(null)}
+                    folder="services"
+                  />
                 </div>
               </div>
 

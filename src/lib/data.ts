@@ -7,6 +7,7 @@ import type {
   Product,
   ContactInfo,
   Booking,
+  BlogPost,
 } from "@/types/database";
 
 export async function getHeroContent(): Promise<HeroContent | null> {
@@ -81,4 +82,34 @@ export async function getBookings(): Promise<Booking[]> {
     .select("*")
     .order("created_at", { ascending: false });
   return (data as Booking[] | null) ?? [];
+}
+
+export async function getBlogPosts(): Promise<BlogPost[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("blog_posts")
+    .select("*")
+    .eq("published", true)
+    .order("created_at", { ascending: false });
+  return (data as BlogPost[] | null) ?? [];
+}
+
+export async function getAllBlogPosts(): Promise<BlogPost[]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("blog_posts")
+    .select("*")
+    .order("created_at", { ascending: false });
+  return (data as BlogPost[] | null) ?? [];
+}
+
+export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("blog_posts")
+    .select("*")
+    .eq("slug", slug)
+    .eq("published", true)
+    .single();
+  return (data as BlogPost | null) ?? null;
 }

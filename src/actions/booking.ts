@@ -2,6 +2,10 @@
 
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
+import {
+  sendBookingConfirmationToClient,
+  sendBookingNotificationToStudio,
+} from "@/lib/email";
 
 const bookingSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -36,6 +40,21 @@ export async function createBooking(formData: FormData) {
   if (error) {
     return { error: { _form: ["Failed to submit booking. Please try again."] } };
   }
+
+  // Send emails – fire-and-forget so a mail failure doesn't break the booking
+  const emailData = {
+    name: parsed.data.name,
+    email: parsed.data.email,
+    phone: parsed.data.phone,
+    service: parsed.data.service,
+    preferred_date: parsed.data.preferred_date,
+    message: parsed.data.message,
+  };
+
+  await Promise.allSettled([
+    sendBookingConfirmationToClient(emailData),
+    sendBookingNotificationToStudio(emailData),
+  ]);
 
   return { success: true };
 }

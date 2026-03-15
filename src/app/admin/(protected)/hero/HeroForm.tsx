@@ -1,11 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { updateHeroContent } from "@/actions/admin";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 import { toast } from "sonner";
 import type { HeroContent } from "@/types/database";
 
@@ -14,7 +16,10 @@ interface HeroFormProps {
 }
 
 export function HeroForm({ hero }: HeroFormProps) {
+  const [imageUrl, setImageUrl] = useState<string | null>(hero?.image_url ?? null);
+
   async function handleSubmit(formData: FormData) {
+    if (imageUrl) formData.set("image_url", imageUrl);
     const result = await updateHeroContent(formData);
     if (result.success) {
       toast.success("Hero section updated");
@@ -68,6 +73,18 @@ export function HeroForm({ hero }: HeroFormProps) {
                   <Input name="cta_text_fr" defaultValue={hero.cta_text_fr} className="mt-1.5" />
                 </div>
               </div>
+            </div>
+          </div>
+
+          <div>
+            <Label className="font-[family-name:var(--font-inter)]">Hero Image</Label>
+            <div className="mt-1">
+              <ImageUpload
+                currentUrl={imageUrl}
+                onUploaded={(url) => setImageUrl(url)}
+                onRemoved={() => setImageUrl(null)}
+                folder="hero"
+              />
             </div>
           </div>
 

@@ -16,6 +16,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { upsertProduct, deleteProduct } from "@/actions/admin";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 import { toast } from "sonner";
 import type { Product } from "@/types/database";
 
@@ -29,11 +30,13 @@ export function ProductsManager({ products, categories }: ProductsManagerProps) 
   const [editing, setEditing] = useState<Product | null>(null);
   const [inStock, setInStock] = useState(true);
   const [featured, setFeatured] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   function openCreate() {
     setEditing(null);
     setInStock(true);
     setFeatured(false);
+    setImageUrl(null);
     setOpen(true);
   }
 
@@ -41,12 +44,14 @@ export function ProductsManager({ products, categories }: ProductsManagerProps) 
     setEditing(product);
     setInStock(product.in_stock);
     setFeatured(product.featured);
+    setImageUrl(product.image_url);
     setOpen(true);
   }
 
   async function handleSubmit(formData: FormData) {
     formData.set("in_stock", String(inStock));
     formData.set("featured", String(featured));
+    if (imageUrl) formData.set("image_url", imageUrl);
     const result = await upsertProduct(formData);
     if (result.success) {
       toast.success(editing ? "Product updated" : "Product created");
@@ -124,6 +129,18 @@ export function ProductsManager({ products, categories }: ProductsManagerProps) 
                     <Switch checked={featured} onCheckedChange={setFeatured} />
                     <Label className="font-[family-name:var(--font-inter)] text-sm">Featured</Label>
                   </div>
+                </div>
+              </div>
+
+              <div>
+                <Label className="font-[family-name:var(--font-inter)]">Product Image</Label>
+                <div className="mt-1">
+                  <ImageUpload
+                    currentUrl={imageUrl}
+                    onUploaded={(url) => setImageUrl(url)}
+                    onRemoved={() => setImageUrl(null)}
+                    folder="products"
+                  />
                 </div>
               </div>
 

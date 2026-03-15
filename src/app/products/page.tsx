@@ -17,6 +17,7 @@ export default async function ProductsPage() {
       id: String(i),
       ...p,
       image_url: null,
+      stripe_price_id: null,
     }));
   }
 

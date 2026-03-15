@@ -1,14 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import Image from "next/image";
-import { Star } from "lucide-react";
+import { Star, ShoppingBag, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n/context";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/animations/ScrollReveal";
 import { PRODUCT_IMAGE_MAP } from "@/constants/images";
+import { createCheckoutSession } from "@/actions/stripe";
+import { toast } from "sonner";
 import type { Product } from "@/types/database";
 
 interface ProductsGridProps {
@@ -19,6 +21,27 @@ interface ProductsGridProps {
 export function ProductsGrid({ products, categories }: ProductsGridProps) {
   const { t, locale } = useI18n();
   const [activeCategory, setActiveCategory] = useState("All");
+  const [loadingId, setLoadingId] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
+
+  async function handleBuy(product: Product) {
+    setLoadingId(product.id);
+    startTransition(async () => {
+      const result = await createCheckoutSession({
+        id: product.id,
+        name_en: product.name_en,
+        price: product.price,
+        image_url: product.image_url,
+        stripe_price_id: product.stripe_price_id,
+      });
+      if ("error" in result) {
+        toast.error(result.error);
+        setLoadingId(null);
+      } else {
+        window.location.href = result.url;
+      }
+    });
+  }
 
   const filtered =
     activeCategory === "All"
@@ -116,10 +139,17 @@ export function ProductsGrid({ products, categories }: ProductsGridProps) {
                         <Button
                           size="sm"
                           variant={product.in_stock ? "default" : "outline"}
-                          disabled={!product.in_stock}
-                          className="font-[family-name:var(--font-inter)]"
+                          disabled={!product.in_stock || loadingId === product.id || isPending}
+                          onClick={() => handleBuy(product)}
+                          className="font-[family-name:var(--font-inter)] gap-1.5"
                         >
-                          {product.in_stock ? t.products.addToCart : t.products.outOfStock}
+                          {loadingId === product.id ? (
+                            <><Loader2 className="h-3.5 w-3.5 animate-spin" /> Redirecting…</>
+                          ) : product.in_stock ? (
+                            <><ShoppingBag className="h-3.5 w-3.5" /> {t.products.addToCart}</>
+                          ) : (
+                            t.products.outOfStock
+                          )}
                         </Button>
                       </div>
                     </div>

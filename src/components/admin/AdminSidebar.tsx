@@ -12,6 +12,7 @@ import {
   ShoppingBag,
   CalendarDays,
   MapPin,
+  FileText,
   LogOut,
   Menu,
   X,
@@ -27,6 +28,7 @@ const navItems = [
   { href: "/admin/about", label: "About", icon: Info },
   { href: "/admin/testimonials", label: "Testimonials", icon: MessageSquare },
   { href: "/admin/products", label: "Products", icon: ShoppingBag },
+  { href: "/admin/blog", label: "Blog", icon: FileText },
   { href: "/admin/bookings", label: "Bookings", icon: CalendarDays },
   { href: "/admin/contact", label: "Contact", icon: MapPin },
 ];

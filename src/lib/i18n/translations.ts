@@ -34,6 +34,17 @@ export const translations = {
       eyebrow: "Client Stories",
       title: "Testimonials",
     },
+    blog: {
+      eyebrow: "Our Journal",
+      title: "Blog",
+      subtitle: "Beauty tips, skincare advice, and treatment guides from our expert aestheticians.",
+      all: "All",
+      readMore: "Read More",
+      backToBlog: "Back to Blog",
+      allArticles: "All Articles",
+      bookAppointment: "Book Appointment",
+      noArticles: "No articles found in this category.",
+    },
     products: {
       eyebrow: "Beauty Collection",
       title: "Our Products",
@@ -98,6 +109,17 @@ export const translations = {
     testimonials: {
       eyebrow: "Histoires de Clientes",
       title: "Temoignages",
+    },
+    blog: {
+      eyebrow: "Notre Journal",
+      title: "Blog",
+      subtitle: "Conseils beaute, soins de la peau et guides de traitements par nos estheticiennes expertes.",
+      all: "Tous",
+      readMore: "Lire la Suite",
+      backToBlog: "Retour au Blog",
+      allArticles: "Tous les Articles",
+      bookAppointment: "Prendre Rendez-vous",
+      noArticles: "Aucun article trouve dans cette categorie.",
     },
     products: {
       eyebrow: "Collection Beaute",

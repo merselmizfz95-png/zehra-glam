@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n/context";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -24,6 +25,7 @@ export function Navbar() {
     { href: "#services", label: t.nav.services },
     { href: "#about", label: t.nav.about },
     { href: "/products", label: t.nav.products },
+    { href: "/blog", label: "Blog" },
     { href: "#testimonials", label: t.nav.testimonials },
     { href: "#contact", label: t.nav.contact },
   ];
@@ -38,7 +40,7 @@ export function Navbar() {
     >
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-18 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link href="/" className="flex items-center gap-2">
             <span
               className={`text-2xl font-bold tracking-tight transition-colors duration-300 ${
                 scrolled ? "text-primary" : "text-white"
@@ -71,7 +73,10 @@ export function Navbar() {
             ))}
           </div>
 
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-2">
+            <ThemeToggle
+              className={scrolled ? "text-foreground" : "text-white"}
+            />
             <Button
               variant="ghost"
               size="sm"
@@ -124,6 +129,7 @@ export function Navbar() {
                 </Link>
               ))}
               <div className="flex items-center gap-3 pt-3 border-t">
+                <ThemeToggle />
                 <Button variant="ghost" size="sm" onClick={toggleLocale} className="gap-1.5">
                   <Globe className="h-3.5 w-3.5" />
                   {locale === "en" ? "FR" : "EN"}

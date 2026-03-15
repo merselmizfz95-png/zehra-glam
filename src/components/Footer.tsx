@@ -8,7 +8,7 @@ export function Footer() {
   const { t } = useI18n();
 
   return (
-    <footer className="bg-foreground text-background relative overflow-hidden">
+    <footer className="bg-[oklch(0.14_0.01_30)] text-[oklch(0.96_0.01_30)] relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
       <div className="absolute bottom-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
 
