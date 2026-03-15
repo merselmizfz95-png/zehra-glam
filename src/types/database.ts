@@ -209,6 +209,8 @@ export interface Database {
           message: string | null;
           preferred_date: string | null;
           status: string;
+          stripe_session_id: string | null;
+          payment_status: string;
           created_at: string;
         };
         Insert: {
@@ -220,6 +222,8 @@ export interface Database {
           message?: string | null;
           preferred_date?: string | null;
           status?: string;
+          stripe_session_id?: string | null;
+          payment_status?: string;
           created_at?: string;
         };
         Update: {
@@ -231,6 +235,8 @@ export interface Database {
           message?: string | null;
           preferred_date?: string | null;
           status?: string;
+          stripe_session_id?: string | null;
+          payment_status?: string;
           created_at?: string;
         };
         Relationships: [];

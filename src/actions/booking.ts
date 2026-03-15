@@ -2,10 +2,8 @@
 
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
-import {
-  sendBookingConfirmationToClient,
-  sendBookingNotificationToStudio,
-} from "@/lib/email";
+import { createBookingDepositSession } from "@/actions/stripe";
+import { sendBookingNotificationToStudio } from "@/lib/email";
 
 const bookingSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -32,29 +30,50 @@ export async function createBooking(formData: FormData) {
   }
 
   const supabase = await createClient();
-  const { error } = await supabase.from("bookings").insert({
-    ...parsed.data,
-    status: "pending",
-  });
 
-  if (error) {
+  // Save the booking first with "pending_payment" status
+  const { data: booking, error } = await supabase
+    .from("bookings")
+    .insert({
+      ...parsed.data,
+      status: "pending",
+      payment_status: "unpaid",
+    })
+    .select("id")
+    .single();
+
+  if (error || !booking) {
     return { error: { _form: ["Failed to submit booking. Please try again."] } };
   }
 
-  // Send emails – fire-and-forget so a mail failure doesn't break the booking
-  const emailData = {
+  // Notify the studio (fire-and-forget)
+  sendBookingNotificationToStudio({
     name: parsed.data.name,
     email: parsed.data.email,
     phone: parsed.data.phone,
     service: parsed.data.service,
     preferred_date: parsed.data.preferred_date,
     message: parsed.data.message,
-  };
+  }).catch(console.error);
 
-  await Promise.allSettled([
-    sendBookingConfirmationToClient(emailData),
-    sendBookingNotificationToStudio(emailData),
-  ]);
+  // Create Stripe deposit checkout session
+  const stripeResult = await createBookingDepositSession({
+    bookingId: booking.id,
+    name: parsed.data.name,
+    email: parsed.data.email,
+    service: parsed.data.service,
+  });
 
-  return { success: true };
+  if ("error" in stripeResult) {
+    // Booking saved but payment failed to create — still a success, admin can follow up
+    return { success: true, checkoutUrl: null };
+  }
+
+  // Save the Stripe session ID on the booking
+  await supabase
+    .from("bookings")
+    .update({ stripe_session_id: stripeResult.url.split("/").pop() ?? null })
+    .eq("id", booking.id);
+
+  return { success: true, checkoutUrl: stripeResult.url };
 }
