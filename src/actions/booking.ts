@@ -2,7 +2,6 @@
 
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
-import { createBookingDepositSession } from "@/actions/stripe";
 import { sendBookingNotificationToStudio } from "@/lib/email";
 
 const bookingSchema = z.object({
@@ -20,8 +19,8 @@ export async function createBooking(formData: FormData) {
     email: formData.get("email") as string,
     phone: formData.get("phone") as string,
     service: formData.get("service") as string,
-    message: formData.get("message") as string,
-    preferred_date: formData.get("preferred_date") as string,
+    message: (formData.get("message") as string) || undefined,
+    preferred_date: (formData.get("preferred_date") as string) || undefined,
   };
 
   const parsed = bookingSchema.safeParse(raw);
@@ -29,51 +28,42 @@ export async function createBooking(formData: FormData) {
     return { error: parsed.error.flatten().fieldErrors };
   }
 
-  const supabase = await createClient();
+  try {
+    const supabase = await createClient();
 
-  // Save the booking first with "pending_payment" status
-  const { data: booking, error } = await supabase
-    .from("bookings")
-    .insert({
-      ...parsed.data,
-      status: "pending",
-      payment_status: "unpaid",
-    })
-    .select("id")
-    .single();
+    const { data: booking, error } = await supabase
+      .from("bookings")
+      .insert({
+        name: parsed.data.name,
+        email: parsed.data.email,
+        phone: parsed.data.phone,
+        service: parsed.data.service,
+        message: parsed.data.message ?? null,
+        preferred_date: parsed.data.preferred_date ?? null,
+        status: "pending",
+        payment_status: "unpaid",
+      })
+      .select("id")
+      .single();
 
-  if (error || !booking) {
-    return { error: { _form: ["Failed to submit booking. Please try again."] } };
+    if (error || !booking) {
+      console.error("Booking insert error:", error);
+      return { error: { _form: ["Failed to save booking. Please try again."] } };
+    }
+
+    // Notify studio in the background — don't block the response
+    sendBookingNotificationToStudio({
+      name: parsed.data.name,
+      email: parsed.data.email,
+      phone: parsed.data.phone,
+      service: parsed.data.service,
+      preferred_date: parsed.data.preferred_date,
+      message: parsed.data.message,
+    }).catch(console.error);
+
+    return { success: true, bookingId: booking.id };
+  } catch (err) {
+    console.error("Unexpected booking error:", err);
+    return { error: { _form: ["Unexpected error. Please try again."] } };
   }
-
-  // Notify the studio (fire-and-forget)
-  sendBookingNotificationToStudio({
-    name: parsed.data.name,
-    email: parsed.data.email,
-    phone: parsed.data.phone,
-    service: parsed.data.service,
-    preferred_date: parsed.data.preferred_date,
-    message: parsed.data.message,
-  }).catch(console.error);
-
-  // Create Stripe deposit checkout session
-  const stripeResult = await createBookingDepositSession({
-    bookingId: booking.id,
-    name: parsed.data.name,
-    email: parsed.data.email,
-    service: parsed.data.service,
-  });
-
-  if ("error" in stripeResult) {
-    // Booking saved but payment failed to create — still a success, admin can follow up
-    return { success: true, checkoutUrl: null };
-  }
-
-  // Save the Stripe session ID on the booking
-  await supabase
-    .from("bookings")
-    .update({ stripe_session_id: stripeResult.url.split("/").pop() ?? null })
-    .eq("id", booking.id);
-
-  return { success: true, checkoutUrl: stripeResult.url };
 }
