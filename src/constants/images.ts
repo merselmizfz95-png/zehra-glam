@@ -13,12 +13,12 @@ export const IMAGES = {
   },
 
   products: {
-    serum: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&q=80",
-    lipstick: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500&q=80",
-    cream: "https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=500&q=80",
-    hairOil: "https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?w=500&q=80",
-    bodyButter: "https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?w=500&q=80",
-    brushSet: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500&q=80",
+    serum: "https://lkazujqqmlnwskoyducj.supabase.co/storage/v1/object/public/products/zehra-glam-radiance-serum.png",
+    lipstick: "https://lkazujqqmlnwskoyducj.supabase.co/storage/v1/object/public/products/zehra-glam-velvet-rose-lipstick.png",
+    cream: "https://lkazujqqmlnwskoyducj.supabase.co/storage/v1/object/public/products/zehra-glam-hydrating-night-cream.png",
+    hairOil: "https://lkazujqqmlnwskoyducj.supabase.co/storage/v1/object/public/products/zehra-glam-silk-hair-oil.png",
+    bodyButter: "https://lkazujqqmlnwskoyducj.supabase.co/storage/v1/object/public/products/zehra-glam-rose-body-butter.png",
+    brushSet: "https://lkazujqqmlnwskoyducj.supabase.co/storage/v1/object/public/products/zehra-glam-professional-brush-set.png",
   },
 
   testimonials: {
