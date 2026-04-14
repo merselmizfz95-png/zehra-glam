@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
@@ -7,8 +8,20 @@ import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n/context";
 import type { HeroContent } from "@/types/database";
 
-const VIDEO_URL =
-  "https://videos.pexels.com/video-files/6620765/6620765-uhd_2560_1440_30fps.mp4";
+// Two models: métisse (smoky eye glamour) + blonde (mirror/brush) — Pressmaster / Pexels UHD
+const HERO_VIDEOS = [
+  // Métisse – smoky eyes, full glam
+  "https://videos.pexels.com/video-files/3181590/3181590-uhd_2560_1440_25fps.mp4",
+  // Blonde – brush & mirror, warm glow
+  "https://videos.pexels.com/video-files/3181792/3181792-uhd_2560_1440_25fps.mp4",
+  // Métisse – second angle
+  "https://videos.pexels.com/video-files/3181591/3181591-uhd_2560_1440_25fps.mp4",
+  // Blonde – second angle
+  "https://videos.pexels.com/video-files/3181791/3181791-uhd_2560_1440_25fps.mp4",
+];
+
+const POSTER_URL =
+  "https://images.unsplash.com/photo-1526045612212-70caf35c14df?w=1920&q=90";
 
 interface HeroSectionProps {
   hero: HeroContent | null;
@@ -16,6 +29,9 @@ interface HeroSectionProps {
 
 export function HeroSection({ hero }: HeroSectionProps) {
   const { t, locale } = useI18n();
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [fading, setFading] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const title =
     locale === "en"
@@ -30,22 +46,42 @@ export function HeroSection({ hero }: HeroSectionProps) {
   const lastWord = words.pop();
   const firstPart = words.join(" ");
 
+  const handleVideoEnd = () => {
+    setFading(true);
+    setTimeout(() => {
+      setActiveIdx((prev) => (prev + 1) % HERO_VIDEOS.length);
+      setFading(false);
+    }, 700);
+  };
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.load();
+    video.play().catch(() => {});
+  }, [activeIdx]);
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <video
+          ref={videoRef}
           autoPlay
           muted
-          loop
           playsInline
           preload="auto"
+          onEnded={handleVideoEnd}
           className="absolute inset-0 w-full h-full object-cover"
-          poster="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1920&q=80"
+          style={{
+            opacity: fading ? 0 : 1,
+            transition: "opacity 0.7s ease-in-out",
+          }}
+          poster={POSTER_URL}
         >
-          <source src={VIDEO_URL} type="video/mp4" />
+          <source src={HERO_VIDEOS[activeIdx]} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/55 to-black/30" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/40 to-black/15" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/15" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 pt-24 pb-16">
