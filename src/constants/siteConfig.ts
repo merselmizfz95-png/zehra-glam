@@ -85,8 +85,8 @@ export const PRODUCT_CATEGORIES = [
 
 export const DEFAULT_PRODUCTS = [
   {
-    name_en: "Radiance Serum",
-    name_fr: "Serum Eclat",
+    name_en: "Zehra Glam Radiance Serum",
+    name_fr: "Zehra Glam Serum Eclat",
     description_en: "A luxurious vitamin C serum that brightens and evens skin tone for a luminous complexion.",
     description_fr: "Un serum luxueux a la vitamine C qui illumine et unifie le teint pour un eclat lumineux.",
     price: 89.00,
@@ -95,8 +95,8 @@ export const DEFAULT_PRODUCTS = [
     featured: true,
   },
   {
-    name_en: "Velvet Rose Lipstick",
-    name_fr: "Rouge a Levres Velours Rose",
+    name_en: "Zehra Glam Velvet Rose Lipstick",
+    name_fr: "Zehra Glam Rouge a Levres Velours Rose",
     description_en: "Long-lasting matte lipstick in a classic rose shade, enriched with hydrating ingredients.",
     description_fr: "Rouge a levres mat longue tenue dans une teinte rose classique, enrichi en ingredients hydratants.",
     price: 35.00,
@@ -105,8 +105,8 @@ export const DEFAULT_PRODUCTS = [
     featured: true,
   },
   {
-    name_en: "Hydrating Night Cream",
-    name_fr: "Creme de Nuit Hydratante",
+    name_en: "Zehra Glam Hydrating Night Cream",
+    name_fr: "Zehra Glam Creme de Nuit Hydratante",
     description_en: "Rich overnight moisturizer with hyaluronic acid and retinol for rejuvenated morning skin.",
     description_fr: "Creme de nuit riche a l'acide hyaluronique et au retinol pour une peau rejuvenie au reveil.",
     price: 65.00,
@@ -115,8 +115,8 @@ export const DEFAULT_PRODUCTS = [
     featured: false,
   },
   {
-    name_en: "Silk Hair Oil",
-    name_fr: "Huile Capillaire Soie",
+    name_en: "Zehra Glam Silk Hair Oil",
+    name_fr: "Zehra Glam Huile Capillaire Soie",
     description_en: "Lightweight argan oil blend that tames frizz and adds brilliant shine to all hair types.",
     description_fr: "Melange leger d'huile d'argan qui dompte les frisottis et ajoute une brillance eclatante.",
     price: 42.00,
@@ -125,8 +125,8 @@ export const DEFAULT_PRODUCTS = [
     featured: true,
   },
   {
-    name_en: "Rose Body Butter",
-    name_fr: "Beurre Corporel Rose",
+    name_en: "Zehra Glam Rose Body Butter",
+    name_fr: "Zehra Glam Beurre Corporel Rose",
     description_en: "Deeply nourishing body butter infused with damask rose and shea butter for silky smooth skin.",
     description_fr: "Beurre corporel nourrissant infuse a la rose de Damas et au beurre de karite pour une peau soyeuse.",
     price: 48.00,
@@ -135,8 +135,8 @@ export const DEFAULT_PRODUCTS = [
     featured: false,
   },
   {
-    name_en: "Professional Brush Set",
-    name_fr: "Kit Pinceaux Professionnel",
+    name_en: "Zehra Glam Professional Brush Set",
+    name_fr: "Zehra Glam Kit Pinceaux Professionnel",
     description_en: "12-piece professional makeup brush set with vegan bristles and a luxurious travel case.",
     description_fr: "Kit de 12 pinceaux de maquillage professionnels avec poils vegan et un etui de voyage luxueux.",
     price: 79.00,

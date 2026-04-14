@@ -158,12 +158,12 @@ INSERT INTO testimonials (client_name, service_en, service_fr, quote_en, quote_f
 
 -- Products
 INSERT INTO products (name_en, name_fr, description_en, description_fr, price, category, in_stock, featured) VALUES
-('Radiance Serum', 'Serum Eclat', 'A luxurious vitamin C serum that brightens and evens skin tone for a luminous complexion.', 'Un serum luxueux a la vitamine C qui illumine et unifie le teint pour un eclat lumineux.', 89.00, 'Skincare', true, true),
-('Velvet Rose Lipstick', 'Rouge a Levres Velours Rose', 'Long-lasting matte lipstick in a classic rose shade, enriched with hydrating ingredients.', 'Rouge a levres mat longue tenue dans une teinte rose classique, enrichi en ingredients hydratants.', 35.00, 'Makeup', true, true),
-('Hydrating Night Cream', 'Creme de Nuit Hydratante', 'Rich overnight moisturizer with hyaluronic acid and retinol for rejuvenated morning skin.', 'Creme de nuit riche a l''acide hyaluronique et au retinol pour une peau rejuvenie au reveil.', 65.00, 'Skincare', true, false),
-('Silk Hair Oil', 'Huile Capillaire Soie', 'Lightweight argan oil blend that tames frizz and adds brilliant shine to all hair types.', 'Melange leger d''huile d''argan qui dompte les frisottis et ajoute une brillance eclatante.', 42.00, 'Haircare', true, true),
-('Rose Body Butter', 'Beurre Corporel Rose', 'Deeply nourishing body butter infused with damask rose and shea butter for silky smooth skin.', 'Beurre corporel nourrissant infuse a la rose de Damas et au beurre de karite pour une peau soyeuse.', 48.00, 'Body Care', true, false),
-('Professional Brush Set', 'Kit Pinceaux Professionnel', '12-piece professional makeup brush set with vegan bristles and a luxurious travel case.', 'Kit de 12 pinceaux de maquillage professionnels avec poils vegan et un etui de voyage luxueux.', 79.00, 'Tools', true, true);
+('Zehra Glam Radiance Serum', 'Zehra Glam Serum Eclat', 'A luxurious vitamin C serum that brightens and evens skin tone for a luminous complexion.', 'Un serum luxueux a la vitamine C qui illumine et unifie le teint pour un eclat lumineux.', 89.00, 'Skincare', true, true),
+('Zehra Glam Velvet Rose Lipstick', 'Zehra Glam Rouge a Levres Velours Rose', 'Long-lasting matte lipstick in a classic rose shade, enriched with hydrating ingredients.', 'Rouge a levres mat longue tenue dans une teinte rose classique, enrichi en ingredients hydratants.', 35.00, 'Makeup', true, true),
+('Zehra Glam Hydrating Night Cream', 'Zehra Glam Creme de Nuit Hydratante', 'Rich overnight moisturizer with hyaluronic acid and retinol for rejuvenated morning skin.', 'Creme de nuit riche a l''acide hyaluronique et au retinol pour une peau rejuvenie au reveil.', 65.00, 'Skincare', true, false),
+('Zehra Glam Silk Hair Oil', 'Zehra Glam Huile Capillaire Soie', 'Lightweight argan oil blend that tames frizz and adds brilliant shine to all hair types.', 'Melange leger d''huile d''argan qui dompte les frisottis et ajoute une brillance eclatante.', 42.00, 'Haircare', true, true),
+('Zehra Glam Rose Body Butter', 'Zehra Glam Beurre Corporel Rose', 'Deeply nourishing body butter infused with damask rose and shea butter for silky smooth skin.', 'Beurre corporel nourrissant infuse a la rose de Damas et au beurre de karite pour une peau soyeuse.', 48.00, 'Body Care', true, false),
+('Zehra Glam Professional Brush Set', 'Zehra Glam Kit Pinceaux Professionnel', '12-piece professional makeup brush set with vegan bristles and a luxurious travel case.', 'Kit de 12 pinceaux de maquillage professionnels avec poils vegan et un etui de voyage luxueux.', 79.00, 'Tools', true, true);
 
 -- Contact Info
 INSERT INTO contact_info (address, phone, email, hours, booking_url)

@@ -34,18 +34,18 @@ export const IMAGES = {
 };
 
 export const PRODUCT_IMAGE_MAP: Record<string, string> = {
-  "Radiance Serum": IMAGES.products.serum,
-  "Serum Eclat": IMAGES.products.serum,
-  "Velvet Rose Lipstick": IMAGES.products.lipstick,
-  "Rouge a Levres Velours Rose": IMAGES.products.lipstick,
-  "Hydrating Night Cream": IMAGES.products.cream,
-  "Creme de Nuit Hydratante": IMAGES.products.cream,
-  "Silk Hair Oil": IMAGES.products.hairOil,
-  "Huile Capillaire Soie": IMAGES.products.hairOil,
-  "Rose Body Butter": IMAGES.products.bodyButter,
-  "Beurre Corporel Rose": IMAGES.products.bodyButter,
-  "Professional Brush Set": IMAGES.products.brushSet,
-  "Kit Pinceaux Professionnel": IMAGES.products.brushSet,
+  "Zehra Glam Radiance Serum": IMAGES.products.serum,
+  "Zehra Glam Serum Eclat": IMAGES.products.serum,
+  "Zehra Glam Velvet Rose Lipstick": IMAGES.products.lipstick,
+  "Zehra Glam Rouge a Levres Velours Rose": IMAGES.products.lipstick,
+  "Zehra Glam Hydrating Night Cream": IMAGES.products.cream,
+  "Zehra Glam Creme de Nuit Hydratante": IMAGES.products.cream,
+  "Zehra Glam Silk Hair Oil": IMAGES.products.hairOil,
+  "Zehra Glam Huile Capillaire Soie": IMAGES.products.hairOil,
+  "Zehra Glam Rose Body Butter": IMAGES.products.bodyButter,
+  "Zehra Glam Beurre Corporel Rose": IMAGES.products.bodyButter,
+  "Zehra Glam Professional Brush Set": IMAGES.products.brushSet,
+  "Zehra Glam Kit Pinceaux Professionnel": IMAGES.products.brushSet,
 };
 
 export const SERVICE_IMAGE_MAP: Record<string, string> = {
